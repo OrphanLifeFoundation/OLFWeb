@@ -1,0 +1,58 @@
+
+<div class="admin_wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="/dashboard">Manage Posts</a></li>
+            <li><a href="/topics">Manage Topics</a></li>
+            <li><a href="/users">Manage Users</a></li>
+            <li><a href="/latest-projects">Manage Projects</a></li>
+            <li><a href="/my-services">Manage Services</a></li>
+            <li><a href="/faq">Manage Faqs</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="/add-faq" class="btn">Add New Faq</a>
+            <a href="/faq" class="btn">Manage Faqs</a>
+        </div>
+
+        <div class="content">
+            <h2 class="page-title">Add Posts</h2>
+
+            <% if(messages.error){ %>
+                <ul class="error">
+                    <li><%= messages.error %></li>
+                </ul>
+            <% } %>
+            
+            <form action="/add-faq" method="POST" class="add-post">
+
+                <div >
+                    <label for="qstn">Faq</label>
+                    <input type="text" name="qstn" class="text-input">
+                </div>
+
+                <div >
+                    <label for="Description">Description</label>
+                    <textarea name="description" id="" cols="50" rows="10" class="text-input"></textarea>
+                </div>
+
+                <div >
+                    <label for="ans">Answer</label>
+                    <textarea name="ans" id="mytextarea" cols="50" rows="10" class="text-input"></textarea>
+                </div>
+
+              
+                <div>
+                    <input type="submit" class="btn" value="Add Faq">
+                </div>
+            </form>
+
+        </div>
+    </div>
+    
+    <main></main>
+</div>
+
+
+

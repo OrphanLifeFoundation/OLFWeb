@@ -1,0 +1,56 @@
+
+
+<div class="page-wrapper">
+
+    <div class="">
+
+        <!-- Content -->
+        <div class="content clearfix">
+
+            <!-- Main content -->
+            <div class="main-content single">
+                <h1 class="post-title"><%= service.title %></h1>
+
+                <article>
+                    <!-- Display project data here -->
+                    <p><%- service.body %></p>
+                </article>
+            </div>
+
+            
+            <!-- Main content -->
+
+            <!-- Sidebar -->
+            <div class="sidebar single">
+
+                <div class="section popular">
+                    <span><h2 class="section-title">Our Blogs</h2></span>
+                    <h2 class="section-title">Popular Posts</h2>
+    
+                    <% popularPosts.forEach(popularPost => { %>
+                        <div class="post">
+                          <a href="/post/<%= popularPost._id %>" class="title clearfix"><h4><%= popularPost.title %></h4></a>
+                        </div>
+                      <% }) %>
+                    
+                </div>
+    
+                <div class="section topics">
+                    <h2 class="section-title">Topics</h2>
+                      <ul>
+                        <% topics.forEach(topic => { %>
+                          <li><a href="/topic/<%= topic._id %>"><%= topic.name %></a></li>
+                        <% }) %>
+                      </ul>
+                  </div>
+                <!-- Sidebar -->
+            </div
+          
+            <!-- //Content -->
+        </div>
+
+    </div>
+
+    
+
+</div>

@@ -1,0 +1,73 @@
+
+<div class="admin_wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="/dashboard">Manage Posts</a></li>
+            <li><a href="/topics">Manage Topics</a></li>
+            <li><a href="/users">Manage Users</a></li>
+            <li><a href="/latest-projects">Manage Projects</a></li>
+            <li><a href="/my-services">Manage Services</a></li>
+            <li><a href="/faq">Manage Faqs</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="/add-post" class="btn admin-btn">Add New Post</a>
+            <a href="/dashboard" class="btn admin-btn">Manage Posts</a>
+        </div>
+
+        <div class="content">
+            <h2 class="page-title">Edit Post</h2>
+            <form action="/delete-post/<%= data._id %>?_method=DELETE" method="POST">
+                <input type="submit" value="Delete" class="btn">
+            </form>
+
+            <% if(messages.error){ %>
+                <ul class="error">
+                    <li><%= messages.error %></li>
+                </ul>
+            <% } %>
+            
+            <form action="/edit-post/<%= data._id %>?_method=PUT" enctype="multipart/form-data" method="POST" class="add-post">
+
+                <div>
+                    <label for="topic">Topic</label>
+                    <select name="topic" class="select-input" value="<%= data.topic ? data.topic.name : '' %>">
+                        <% topics.forEach(topic => { %>
+                            <option value="<%= topic._id %>" <%= data.topic && data.topic.toString() === topic._id.toString() ? 'selected' : '' %>><%= topic.name %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                
+                
+
+                <div>
+                    <label for="title">Title</label>
+                    <input type="text" name="title" class="text-input" value="<%= data.title %>">
+                </div>
+
+                <div>
+                    <label for="preview">Preview</label>
+                    <textarea name="preview" id="body" cols="50" rows="5"><%= data.preview %></textarea>
+                </div>
+
+                <div>
+                    <label for="body">Body</label>
+                    <textarea name="body" id="mytextarea" cols="50" rows="10"><%= data.body %></textarea>
+                </div>
+
+                <div>
+                    <label for="image">Image</label>
+                    <input type="file" name="image" id="img-input" class="text-input">
+                </div>
+              
+                <div>
+                    <input type="submit" class="btn" value="Update">
+                </div>
+            </form>
+
+        </div>
+    </div>
+    
+    <main></main>
+</div>

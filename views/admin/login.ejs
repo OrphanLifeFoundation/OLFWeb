@@ -1,0 +1,35 @@
+
+
+<div class="auth-content contact">
+    <% if(messages.error){ %>
+        <ul class="error">
+            <li><%= messages.error %></li>
+        </ul>
+        <% } %>
+
+    <% if(messages.success){ %>
+        <ul class="success">
+            <li><%= messages.success %></li>
+        </ul>
+        <% } %>
+        <h2 class="heading">Sign in</h2>
+    <form action="/admin/login" method="post">
+
+        
+        <div class="input-box">
+            <label for="username"><b>Username</b></label>
+        <input type="text" name="username" id="" placeholder="Enter Username">
+        </div>
+        <div class="input-box">
+            <label for="passwword">Password</label>
+            <input type="password" name="password" id="" placeholder="Enter Password">
+        </div>
+        
+    
+        <input type="submit" value="Login" class="btn">
+
+        <p>Or <a href="/register">Sign Up</a></p>
+    </form>
+
+</div>
+

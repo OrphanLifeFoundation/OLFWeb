@@ -1,0 +1,42 @@
+<div class="admin_wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="/dashboard">Manage Posts</a></li>
+            <li><a href="/topics">Manage Topics</a></li>
+            <li><a href="/users">Manage Users</a></li>
+            <li><a href="/latest-projects">Manage Projects</a></li>
+            <li><a href="/my-services">Manage Services</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="/add-topic" class="btn admin-btn">Add New Topic</a>
+            <a href="/topics" class="btn admin-btn">Manage Topics</a>
+        </div>
+
+        <div class="content">
+            <h2 class="page-title">Add Topic</h2>
+
+            <% if(messages.error){ %>
+                <ul class="error">
+                    <li><%= messages.error %></li>
+                </ul>
+            <% } %>
+           
+            <form action="/add-topic" method="POST"  class="add-post">
+
+                <div>
+                    <label for="name">Name of Topic</label>
+                    <input type="text" name="name" class="text-input" value="">
+                </div>
+              
+                <div>
+                    <input type="submit" class="btn" value="Add Topic">
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+

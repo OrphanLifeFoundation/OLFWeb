@@ -1,0 +1,51 @@
+<div class="admin_wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="/dashboard">Manage Posts</a></li>
+            <li><a href="/topics">Manage Topics</a></li>
+            <li><a href="/users">Manage Users</a></li>
+            <li><a href="/latest-projects">Manage Projects</a></li>
+            <li><a href="/my-services">Manage Services</a></li>
+            <li><a href="/faq">Manage Faqs</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="/add-service" class="btn admin-btn">Add New Services</a>
+            <a href="/my-services" class="btn admin-btn">Manage Services</a>
+        </div>
+
+        <div class="content">
+            <h2 class="page-title">Add New Services</h2>
+
+            <% if(messages.error){ %>
+                <ul class="error">
+                    <li><%= messages.error %></li>
+                </ul>
+            <% } %>
+           
+            <form action="/add-service" method="POST" enctype="multipart/form-data" class="add-post">
+
+                <div>
+                    <label for="title">Title</label>
+                    <input type="text" name="title" class="text-input">
+                </div>
+
+                <div>
+                    <label for="preview">Preview</label>
+                    <textarea name="preview" id="body" cols="50" rows="5"></textarea>
+                </div>
+
+                <div>
+                    <label for="body">Body</label>
+                    <textarea name="body" id="mytextarea" cols="50" rows="10"></textarea>
+                </div>
+              
+                <div>
+                    <input type="submit" class="btn" value="Add">
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

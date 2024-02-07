@@ -1,0 +1,163 @@
+
+
+<div class="page-wrapper">
+
+    <div class="">
+
+        <!-- Content -->
+        <div class="content clearfix">
+
+            <!-- Main content -->
+            <div class="main-content single">
+               
+                <div class="single-post">
+                    <h1 class="post-title"><%= data.title %></h1>
+                    <p>
+                        <span><i class='bx bxs-user'>Asizy Noah</i></span> &nbsp;
+                        <i class='bx bxs-calendar'><%= data.createdAt.toDateString()%></i>
+                    </p>
+
+                    <div class="share">
+                        <p>Share post on:</p>
+                        <div class="share-buttons">
+                            <a href="https://api.whatsapp.com/send?text=<%= encodeURIComponent(data.title + ' ' + currentUrl) %>" target="_blank" class="share-button whatsapp"><i class='bx bxl-whatsapp'></i></a>
+                            <a href="https://twitter.com/intent/tweet?text=<%= encodeURIComponent(data.title) %>&url=<%= encodeURIComponent(currentUrl) %>" target="_blank" class="share-button twitter"><i class='bx bxl-twitter'></i></a>
+                            <a href="https://www.instagram.com" target="_blank" class="share-button instagram"><i class='bx bxl-instagram'></i></a>
+                            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= encodeURIComponent(currentUrl) %>&title=<%= encodeURIComponent(data.title) %>" target="_blank" class="share-button linkedin"><i class='bx bxl-linkedin'></i></a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=<%= encodeURIComponent(currentUrl) %>&quote=<%= encodeURIComponent(data.title) %>" target="_blank" class="share-button facebook"><i class='bx bxl-facebook'></i></a>
+                        </div>
+                    </div>
+                    
+                    
+
+                    <article>
+                        
+                        <%- data.body %>
+                    </article>
+
+                    <div class="share">
+                        <p>Share post on:</p>
+                        <div class="share-buttons">
+                            <a href="https://api.whatsapp.com/send?text=<%= encodeURIComponent(data.title + ' ' + currentUrl) %>" target="_blank" class="share-button whatsapp"><i class='bx bxl-whatsapp'></i></a>
+                            <a href="https://twitter.com/intent/tweet?text=<%= encodeURIComponent(data.title) %>&url=<%= encodeURIComponent(currentUrl) %>" target="_blank" class="share-button twitter"><i class='bx bxl-twitter'></i></a>
+                            <a href="https://www.instagram.com" target="_blank" class="share-button instagram"><i class='bx bxl-instagram'></i></a>
+                            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= encodeURIComponent(currentUrl) %>&title=<%= encodeURIComponent(data.title) %>" target="_blank" class="share-button linkedin"><i class='bx bxl-linkedin'></i></a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=<%= encodeURIComponent(currentUrl) %>&quote=<%= encodeURIComponent(data.title) %>" target="_blank" class="share-button facebook"><i class='bx bxl-facebook'></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comments">
+                    <h3><span>Comments</span></h3>
+                    <ul>
+                        <% if (comments && comments.length > 0) { %>
+                            <% comments.forEach(function(comment) { %>
+                                <li>
+                                    <div class="comment-info">
+                                        <strong>
+                                            <i class='bx bxs-user'></i>
+                                            <%= comment.author.name %>
+                                        </strong> <br>
+                                        <span class="comment-date"> <%= new Date(comment.timestamp).toDateString() %></span>
+                                    </div>
+                                    <p><%= comment.comment %></p>
+                                    <!-- Reply Button -->
+                                    <button class="reply-button" data-comment-id="<%= comment._id %>">Reply</button>
+                                    <!-- Reply Form -->
+                                    <div class="hidden" data-comment-id="<%= comment._id %>">
+                                        <form action="/post/<%= data._id %>/add-comment" method="POST" class="comment-form reply">
+                                            <div class="form-group">
+                                                <label for="name">Your Name (Required):</label>
+                                                <input class="text-input" type="text" name="name" id="name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Your Email (Required):</label>
+                                                <input class="text-input" type="email" name="email" id="email" required> <br>
+                                                <span>Your email will not be published.</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comment">Your Reply:</label>
+                                                <textarea name="comment" id="comment" rows="3" cols="50"></textarea>
+                                            </div>
+                                            <input type="hidden" name="parentId" value="<%= comment._id %>">
+                                            <button type="submit" class="btn">Post Reply</button>
+                                        </form>
+                                    </div>
+                                </li>
+                            <% }); %>
+                        <% } else { %>
+                            <p>No comments yet.</p>
+                        <% } %>
+                    </ul>
+                </div>
+                
+                <div class="comments">
+                    <h3><span>Add a Comment</span></h3>
+                    <form action="/post/<%= data._id %>/add-comment" method="POST" class="comment-form">
+                        <div class="form-group">
+                            <label for="name">Your Name (Required):</label>
+                            <input class="text-input" type="text" name="name" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email (Required):</label>
+                            <input class="text-input" type="email" name="email" id="email" required>
+                            <span>Your email will not be published.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Your Comment:</label>
+                            <textarea name="comment" id="comment" rows="3" cols="50"></textarea>
+                        </div>
+                        <button type="submit" class="btn">Post Comment</button>
+                    </form>
+                </div>
+                
+    
+                
+            </div>
+
+            
+            
+            <!-- Main content -->
+
+            <!-- Sidebar -->
+            <div class="sidebar single">
+
+                <div class="section search">
+                    <h2 class="section-title">Search</h2>
+                    <form action="/search" method="post">
+                        <div class="input-box">
+                            <input type="search" name="searchTerm" class="input-text" placeholder="Search.." id="searchInput">
+                        </div>
+                    </form>
+                </div>
+        
+                <div class="section popular">
+                    <h2 class="section-title">Popular Posts</h2>
+    
+                    <% popularPosts.forEach(popularPost => { %>
+                        <div class="post">
+                          <a href="/post/<%= popularPost._id %>" class="title clearfix"><h4><%= popularPost.title %></h4></a>
+                        </div>
+                      <% }) %>
+                    
+                </div>
+    
+                <div class="section topics">
+                    <h2 class="section-title">Topics</h2>
+                      <ul>
+                        <% topics.forEach(topic => { %>
+                          <li><a href="/topic/<%= topic._id %>"><%= topic.name %></a></li>
+                        <% }) %>
+                      </ul>
+                  </div>
+                <!-- Sidebar -->
+            </div>
+          
+            <!-- //Content -->
+        </div>
+
+    </div>
+
+    
+
+</div>

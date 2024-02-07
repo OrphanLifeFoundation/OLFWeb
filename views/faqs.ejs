@@ -1,0 +1,137 @@
+
+
+<div class="page-wrapper">
+
+    <div class="">
+
+        <!-- Content -->
+        <div class="content clearfix">
+
+            <!-- Main content -->
+            <div class="main-content single">
+               
+                <div class="single-post">
+                    <h1 class="post-title"><%= faq.qstn %></h1>
+
+                    
+                    
+                    
+
+                    <article>
+                        
+                        <%- faq.ans %>
+                    </article>
+
+                    
+                </div>
+
+                <div class="comments">
+                    <h3><span>Comments</span></h3>
+                    <ul>
+                        <% if (comments && comments.length > 0) { %>
+                            <% comments.forEach(function(comment) { %>
+                                <li>
+                                    <div class="comment-info">
+                                        <strong>
+                                            <i class='bx bxs-user'></i>
+                                            <%= comment.author.name %>
+                                        </strong> <br>
+                                        <span class="comment-date"> <%= new Date(comment.timestamp).toDateString() %></span>
+                                    </div>
+                                    <p><%= comment.comment %></p>
+                                    <!-- Reply Button -->
+                                    <button class="reply-button" data-comment-id="<%= comment._id %>">Reply</button>
+                                    <!-- Reply Form -->
+                                    <div class="hidden" data-comment-id="<%= comment._id %>">
+                                        <form action="/post/<%= data._id %>/add-comment" method="POST" class="comment-form reply">
+                                            <div class="form-group">
+                                                <label for="name">Your Name (Required):</label>
+                                                <input class="text-input" type="text" name="name" id="name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Your Email (Required):</label>
+                                                <input class="text-input" type="email" name="email" id="email" required> <br>
+                                                <span>Your email will not be published.</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comment">Your Reply:</label>
+                                                <textarea name="comment" id="comment" rows="3" cols="50"></textarea>
+                                            </div>
+                                            <input type="hidden" name="parentId" value="<%= comment._id %>">
+                                            <button type="submit" class="btn">Post Reply</button>
+                                        </form>
+                                    </div>
+                                </li>
+                            <% }); %>
+                        <% } else { %>
+                            <p>No comments yet.</p>
+                        <% } %>
+                    </ul>
+                </div>
+                
+                <div class="comments">
+                    <h3><span>Add a Comment</span></h3>
+                    <form action="/faq/<%= faq._id %>/add-comment" method="POST" class="comment-form">
+                        <div class="form-group">
+                            <label for="name">Your Name (Required):</label>
+                            <input class="text-input" type="text" name="name" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email (Required):</label>
+                            <input class="text-input" type="email" name="email" id="email" required>
+                            <span>Your email will not be published.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Your Comment:</label>
+                            <textarea name="comment" id="comment" rows="3" cols="50"></textarea>
+                        </div>
+                        <button type="submit" class="btn">Post Comment</button>
+                    </form>
+                </div>
+                
+    
+                
+            </div>
+
+            
+            
+            <!-- Main content -->
+
+            <!-- Sidebar -->
+            <div class="sidebar single">
+
+                <div class="section popular">
+                    <span><h2 class="section-title">Our Blogs</h2></span>
+                    <h2 class="section-title">Popular Posts</h2>
+    
+                    <% popularPosts.forEach(popularPost => { %>
+                        <div class="post">
+                          <a href="/post/<%= popularPost._id %>" class="title clearfix"><h4><%= popularPost.title %></h4></a>
+                        </div>
+                      <% }) %>
+                    
+                </div>
+    
+                <div class="section topics">
+                    <h2 class="section-title">Topics</h2>
+                      <ul>
+                        <% topics.forEach(topic => { %>
+                          <li><a href="/topic/<%= topic._id %>"><%= topic.name %></a></li>
+                        <% }) %>
+                      </ul>
+                  </div>
+                <!-- Sidebar -->
+            </div
+          
+
+                <!-- Sidebar -->
+            </div>
+          
+            <!-- //Content -->
+        </div>
+
+    </div>
+
+    
+
+</div>

@@ -1,0 +1,67 @@
+<div class="admin_wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="/dashboard">Manage Posts</a></li>
+            <li><a href="/topics">Manage Topics</a></li>
+            <li><a href="/users">Manage Users</a></li>
+            <li><a href="/latest-projects">Manage Projects</a></li>
+            <li><a href="/my-services">Manage Services</a></li>
+            <li><a href="/faq">Manage Faqs</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="/add-post" class="btn admin-btn">Add New Post</a>
+            <a href="/dashboard" class="btn admin-btn">Manage Posts</a>
+        </div>
+
+        <div class="content">
+            <div>
+                <h2 class="page-title">Manage Posts</h2>
+            </div>
+
+            <% if(messages.success){ %>
+                <ul class="success">
+                    <li><%= messages.success %></li>
+                </ul>
+            <% } %>
+            
+            <table>
+                <thead>
+                    <th>SN</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th colspan="3">Action</th>
+                </thead>
+                
+                <% data.forEach(function(post, index) { %>
+
+                    <tbody>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td>
+                                <a href="/post/<%= post._id %>"><%= post.title %></a>
+                            </td>
+                            <td>Asizy</td>
+                
+                            <td><a href="/edit-post/<%= post._id %>" class="edit">Edit</a></td>
+                
+                            <td>
+                                <form action="/delete-post/<%= post._id %>?_method=DELETE" method="post">
+                                    <input type="submit" value="Delete" class="delete">
+                                </form>
+                            </td>
+                
+                            <td><a href="#" class="publish">Publish</a></td>
+                        </tr>
+                    </tbody>
+                
+                <% }); %>
+                
+
+            </table>
+        </div>
+    </div>
+    
+    <main></main>
+</div>

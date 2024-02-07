@@ -1,0 +1,52 @@
+<div class="page-wrapper">
+        
+    <div class="wrapper">
+        <section class="services">
+            <h2 class="recent-post-title">Our <span>Services</span></h2>
+            <div class="services-container">
+    
+    
+                
+                    <% if (services.length === 0) { %>
+                        <p>No services available at the moment.</p>
+                    <% } else { %>
+                        <% services.forEach(function(service) { %>
+                            <div class="services-box">
+                            <i class='bx bxs-paint'></i>
+                            <h3><%= service.title %></h3>
+                            <p><%= service.preview %></p>
+                            <a href="/service/<%= service._id %>" class="btn">Read More</a>
+                            </div>
+                        <% }); %>
+                    <% } %>
+                
+                
+            </div>
+        </section>
+    
+        <section class="portfolio">
+            <h2 class="recent-post-title">Latest <span>Project</span></h2>
+            <div class="portfolio-container">
+                
+                    <% if (projects.length === 0) { %>
+                        <p>No projects available at the moment.</p>
+                    <% } else { %>
+                        <% projects.forEach(function(project) { %>
+                            <div class="portfolio-box">
+
+                                <img src="data:<%= project.image.contentType %>;base64,<%= project.image.data.toString('base64') %>" alt="<%= project.title %>" width="600" height="350">
+
+                                <div class="portfolio-layer">
+                                    <h4><%= project.title %></h4>
+                                    <p><%- project.preview %></p>
+                                    <a href="/project/<%= project._id %>">
+                                        <i class='bx bx-link-external'></i></a>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } %>
+
+            </div>
+        </section>
+    </div>
+</div>

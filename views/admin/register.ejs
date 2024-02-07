@@ -1,0 +1,29 @@
+<div class="auth-content contact">
+    <% if(messages.error){ %>
+        <ul class="error">
+            <li><%= messages.error %></li>
+        </ul>
+        <% } %>
+        <h2 class="heading">Sign up</h2>
+    <form action="/admin/register" method="post">
+
+        
+        <div class="input-box">
+            <label for="username"><b>Username</b></label>
+        <input type="text" name="username" id="" placeholder="Enter Username">
+        </div>
+        <div class="input-box">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="" placeholder="Enter Email" >
+        </div>
+        <div class="input-box">
+            <label for="passwword">Password</label>
+            <input type="password" name="password" id="" placeholder="Enter Password">
+        </div>
+        
+    
+        <input type="submit" value="Register" class="btn">
+        <p>Or <a href="/login">Sign In</a></p>
+    </form>
+
+</div>

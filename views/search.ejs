@@ -1,0 +1,66 @@
+<div class="page-wrapper">
+
+    <!-- Content -->
+    <div class="content clearfix">
+
+        <!-- Main content -->
+        <div class="main-content">
+            <div class="author">
+                <h1 class="recent-post-title">Search <span>Results</span> </h1>
+            </div>
+
+            <div class="search_results">
+                <% if (data.length > 0) { %>
+                    <% data.forEach(function(post) { %>
+                      <div class="">
+                          <div class="">
+                            <h1><a href="/post/<%= post._id %>"><%= post.title %></a></h1>
+                            
+                            <i class='bx bxs-user'>Asizy</i>
+                            <i class='bx bxs-calendar'><%= post.createdAt %></i>
+                            <p class="preiew-text"><%= post.preview %>.</p>
+                          </div>
+                        </div>
+                    <% }); %>
+                  <% } else { %>
+                    <p>No search results found.</p>
+                  <% } %>
+            </div>
+
+            
+            
+        </div>
+
+        
+        <!-- Main content -->
+
+        <!-- Sidebar -->
+        <div class="sidebar single">
+
+            <div class="section popular">
+                <h2 class="section-title">Popular Posts</h2>
+
+                <% popularPosts.forEach(popularPost => { %>
+                    <div class="post">
+                      <a href="/post/<%= popularPost._id %>" class="title clearfix"><h4><%= popularPost.title %></h4></a>
+                    </div>
+                  <% }) %>
+                
+            </div>
+
+            <div class="section topics">
+                <h2 class="section-title">Topics</h2>
+                  <ul>
+                    <% topics.forEach(topic => { %>
+                      <li><a href="/topic/<%= topic._id %>"><%= topic.name %></a></li>
+                    <% }) %>
+                  </ul>
+            </div>
+            <!-- Sidebar -->
+        </div
+
+        <!-- yes -->
+            
+
+    </div>
+</div>

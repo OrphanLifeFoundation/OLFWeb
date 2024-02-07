@@ -1,0 +1,99 @@
+<div class="admin_wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="/dashboard">Manage Posts</a></li>
+            <li><a href="/topics">Manage Topics</a></li>
+            <li><a href="/users">Manage Users</a></li>
+            <li><a href="/latest-projects">Manage Projects</a></li>
+            <li><a href="/my-services">Manage Services</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="/add-topic" class="btn admin-btn">Add New Topic</a>
+            <a href="/topics" class="btn admin-btn">Manage Topics</a>
+        </div>
+
+        <div class="content">
+            <h2 class="page-title">Manage Topics</h2>
+
+            <% if(messages.success){ %>
+                <ul class="success">
+                    <li><%= messages.success %></li>
+                </ul>
+            <% } %>
+           
+            <table>
+                <thead>
+                    <th>SN</th>
+                    <th>Title</th>
+                    <th colspan="2">Action</th>
+                </thead>
+                <tbody>
+                    <% topics.forEach(function(topic, index) { %>
+                        <tr>
+                        <td><%= index + 1 %></td>
+                        <td><a href="/topic/<%= topic._id %>"><%= topic.name %></a></td>
+                                    
+                        <td><a href="/edit-topic/<%= topic._id %>" class="edit">Edit</a></td>
+                        <td>
+                            <form action="/delete-topic/<%= topic._id %>?_method=DELETE" method="post">
+                            <button type="submit" class="delete">Delete</button>
+                            </form>
+                        </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div><div class="admin_wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="/dashboard">Manage Posts</a></li>
+            <li><a href="/topics">Manage Topics</a></li>
+            <li><a href="/users">Manage Users</a></li>
+            <li><a href="/latest-projects">Manage Projects</a></li>
+            <li><a href="/my-services">Manage Services</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="/add-topic" class="btn admin-btn">Add New Topic</a>
+            <a href="/topics" class="btn admin-btn">Manage Topics</a>
+        </div>
+
+        <div class="content">
+            <h2 class="page-title">Manage Topics</h2>
+
+            <% if(messages.success){ %>
+                <ul class="success">
+                    <li><%= messages.success %></li>
+                </ul>
+            <% } %>
+           
+            <table>
+                <thead>
+                    <th>SN</th>
+                    <th>Title</th>
+                    <th colspan="2">Action</th>
+                </thead>
+                <tbody>
+                    <% topics.forEach(function(topic, index) { %>
+                        <tr>
+                        <td><%= index + 1 %></td>
+                        <td><a href="/topic/<%= topic._id %>"><%= topic.name %></a></td>
+                                    
+                        <td><a href="/edit-topic/<%= topic._id %>" class="edit">Edit</a></td>
+                        <td>
+                            <form action="/delete-topic/<%= topic._id %>?_method=DELETE" method="post">
+                            <button type="submit" class="delete">Delete</button>
+                            </form>
+                        </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

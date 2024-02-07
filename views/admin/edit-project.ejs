@@ -1,0 +1,60 @@
+<div class="admin_wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="/dashboard">Manage Posts</a></li>
+            <li><a href="/topics">Manage Topics</a></li>
+            <li><a href="/users">Manage Users</a></li>
+            <li><a href="/latest-projects">Manage Projects</a></li>
+            <li><a href="/my-services">Manage Services</a></li>
+            <li><a href="/faq">Manage Faqs</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="/create-user" class="btn admin-btn">Add New Project</a>
+            <a href="/users" class="btn admin-btn">Manage Projects</a>
+        </div>
+
+        <div class="content">
+            <h2 class="page-title">Edit Project</h2>
+
+            <form action="/delete-project/<%= project._id %>?_method=DELETE" method="post">
+                <button type="submit" class="btn admin-btn">Delete this Project</button>
+            </form>
+
+            <% if(messages.error){ %>
+                <ul class="error">
+                    <li><%= messages.error %></li>
+                </ul>
+            <% } %>
+           
+            <form action="/edit-project/<%= project._id %>" method="POST" enctype="multipart/form-data" class="add-post">
+
+                <div>
+                    <label for="title">Title</label>
+                    <input type="text" name="title" class="text-input" value="<%= project.title %>">
+                </div>
+
+                <div>
+                    <label for="preview">Preview</label>
+                    <textarea name="preview" id="" cols="50" rows="5"><%= project.preview %></textarea>
+                </div>
+
+                <div>
+                    <label for="body">Body</label>
+                    <textarea name="body" id="mytextarea" cols="50" rows="10"><%= project.body %></textarea>
+                </div>
+
+                <div>
+                    <label for="image">Image</label>
+                    <input type="file" name="image" id="img-input" class="text-input">
+                </div>
+              
+                <div>
+                    <input type="submit" class="btn" value="Update Project">
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

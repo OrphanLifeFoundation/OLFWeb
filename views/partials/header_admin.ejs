@@ -1,0 +1,46 @@
+<div id="top"></div>
+<header class="header">
+    
+    <div class="nav">
+
+        <div class="logo">
+            <p>aHUB</p>
+        </div>
+     
+        <div class="menu-container">
+
+            <div class="nav-mode">
+                <a id="toggleDark"><i class="bx bx-moon Theme-icon"></i></a>
+            </div>
+
+            <% if (currentPage === 'login') { %>
+                <div class=" ">
+                    <a href="register">
+                        <button class="logout_btn btn">
+                            Sign Up
+                        </button>
+                    </a>
+                </div>
+            <% } else if (currentPage === 'register') { %>
+                <div class=" ">
+                    <a href="login">
+                        <button class="logout_btn btn">
+                            Sign In
+                        </button>
+                    </a>
+                </div>
+            <% } else if (currentPage === 'dashboard' || currentPage === 'add-post' || currentPage === 'add-project'|| currentPage === 'add-service'|| currentPage === 'create-user'|| currentPage === 'edit-post'|| currentPage === 'edit-project'|| currentPage === 'edit-service'|| currentPage === 'edit-user'|| currentPage === 'latest-projects'|| currentPage === 'my-services'|| currentPage === 'users') { %>
+                <div class=" ">
+                    <a href="/logout">
+                        <button class="logout_btn btn">
+                            Sign Out
+                        </button>
+                    </a>
+                </div>
+            <% } %>
+
+        </div>
+
+    </div>
+
+</header>

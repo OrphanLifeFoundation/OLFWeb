@@ -1,0 +1,59 @@
+<div class="admin_wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="/dashboard">Manage Posts</a></li>
+            <li><a href="/topics">Manage Topics</a></li>
+            <li><a href="/users">Manage Users</a></li>
+            <li><a href="/latest-projects">Manage Projects</a></li>
+            <li><a href="/my-services">Manage Services</a></li>
+            <li><a href="/faq">Manage Faqs</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="/add-faq" class="btn admin-btn">Add New Faq</a>
+        </div>
+
+        <div class="content">
+            <div>
+                <h2 class="page-title">Manage Faqs</h2>
+            </div>
+
+            <% if(messages.success){ %>
+                <ul class="success">
+                    <li><%= messages.success %></li>
+                </ul>
+            <% } %>
+            
+            <table>
+                <thead>
+                  <th>SN</th>
+                  <th>Title</th>
+                  <th colspan="2">Action</th>
+                </thead>
+                <tbody>
+                  <% if (faqs.length === 0) { %>
+                    <tr>
+                      <td colspan="4">No faqs available at the moment.</td>
+                    </tr>
+                  <% } else { %>
+                    <% faqs.forEach(function(faq, index) { %>
+                      <tr>
+                        <td><%= index + 1 %></td>
+                        <td><a href="/faqs/<%= faq._id %>"><%= faq.qstn %></a></td>
+                        <td><a href="/edit-faq/<%= faq._id %>" class="edit">Edit</a></td>
+                        <td>
+                          <form action="/delete-faq/<%= faq._id %>?_method=DELETE" method="post">
+                            <button type="submit" class="delete">Delete</button>
+                          </form>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  <% } %>
+                </tbody>
+              </table>
+        </div>
+    </div>
+    
+    <main></main>
+</div>

@@ -1,0 +1,56 @@
+<div class="admin_wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="/dashboard">Manage Posts</a></li>
+            <li><a href="/topics">Manage Topics</a></li>
+            <li><a href="/users">Manage Users</a></li>
+            <li><a href="/latest-projects">Manage Projects</a></li>
+            <li><a href="/my-services">Manage Services</a></li>
+            <li><a href="/faq">Manage Faqs</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="/edit-user" class="btn admin-btn">Edit User</a>
+            <a href="/users" class="btn admin-btn">Manage Users</a>
+        </div>
+
+        <div class="content">
+            <h2 class="page-title">Add User</h2>
+            
+            <form action="/create-user" method="post">
+                <div>
+                    <label for="username">Username</label>
+                    <input type="text" name="username" class="text-input">
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" class="text-input">
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="text-input">
+                </div>
+                <div>
+                    <label for="passwordconf">Password confirmation</label>
+                    <input type="password" name="passwordconf" class="text-input">
+                </div>
+                <div>
+                    <label for="role">Role</label>
+                    <select name="role" class="text-input">
+                        <option value="Admin">Admin</option>
+                        <option value="Author">Author</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit" class="btn">Create User</button>
+                </div>
+            </form>
+            
+            
+
+        </div>
+    </div>
+    
+    <main></main>
+</div>

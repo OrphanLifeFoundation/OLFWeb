@@ -1,0 +1,51 @@
+<div class="admin_wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="/dashboard">Manage Posts</a></li>
+            <li><a href="/topics">Manage Topics</a></li>
+            <li><a href="/users">Manage Users</a></li>
+            <li><a href="/latest-projects">Manage Projects</a></li>
+            <li><a href="/my-services">Manage Services</a></li>
+            <li><a href="/faq">Manage Faqs</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="/add-project" class="btn admin-btn">Add New Project</a>
+            <a href="/latest-Projects" class="btn admin-btn">Manage Projects</a>
+        </div>
+
+        <div class="content">
+            <h2 class="page-title">Manage Latest Projects</h2>
+
+            <% if(messages.success){ %>
+                <ul class="success">
+                    <li><%= messages.success %></li>
+                </ul>
+            <% } %>
+           
+            <table>
+                <thead>
+                    <th>SN</th>
+                    <th>Title</th>
+                    <th colspan="2">Action</th>
+                </thead>
+                <tbody>
+                    <% projects.forEach(function(project, index) { %>
+                        <tr>
+                        <td><%= index + 1 %></td>
+                        <td><a href="/project/<%= project._id %>"><%= project.title %></a></td>
+                                    
+                        <td><a href="/edit-project/<%= project._id %>" class="edit">Edit</a></td>
+                        <td>
+                            <form action="/delete-project/<%= project._id %>?_method=DELETE" method="post">
+                            <button type="submit" class="delete">Delete</button>
+                            </form>
+                        </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
