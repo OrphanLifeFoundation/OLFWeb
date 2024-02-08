@@ -271,12 +271,26 @@ a:focus {
   max-height: 70px;
 }
 
+.navbar-brand-small {
+  display: none;
+}
+
 .navbar-dark .navbar-nav .nav-link,
 .navbar-dark .navbar-nav .nav-link:focus,
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link.active {
   padding: 10px 15px 8px 15px;
   color: #ffffff;
+}
+
+.container-fluid .menu {
+  z-index: 999;
+  cursor: pointer;
+}
+
+.container-fluid .menu .bx {
+  color: #fff;
+  font-size: 2.5rem;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover,
@@ -290,6 +304,39 @@ a:focus {
   border: 0;
   border-radius: 0;
   background: #f8f9fa;
+}
+
+@media (max-width: 1200px) {
+
+  .navbar-brand-small {
+      display: block;
+  }
+
+  .navbar-brand-large {
+      display: none;
+  }
+}
+
+@media (max-width: 992px) {
+
+  .navbar-brand-small {
+      display: none;
+  }
+
+  .navbar-brand-large {
+      display: block;
+  }
+}
+
+@media (max-width: 550px) {
+
+  .navbar-brand-small {
+      display: block;
+  }
+
+  .navbar-brand-large {
+      display: none;
+  }
 }
 
 @media (min-width: 992px) {
@@ -310,7 +357,7 @@ a:focus {
   }
   
   .page .navbar {
-      background: #20212B !important;
+      background: #79797a9d !important;
   }
   
   .navbar a.nav-link {
@@ -323,7 +370,7 @@ a:focus {
 @media (max-width: 991.98px) {   
   .navbar {
       padding: 15px;
-      background: #20212B !important;
+      background: #79797a9d !important;
   }
   
   .navbar a.nav-link {
@@ -2053,10 +2100,6 @@ a:focus {
   font-size: 22px;
   font-weight: 700;
   color: var(--MAIN-COLOR);
-}
-
-.footer-contact p a{
-  color: #fff;
 }
 
 .footer .footer-link a {
