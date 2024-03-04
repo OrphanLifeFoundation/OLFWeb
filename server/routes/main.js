@@ -228,7 +228,7 @@ router.get('/topic/:topicId', async (req, res) => {
 
 
 // Volunteer form submission
-router.post('/vol-send-email', async (req, res) => {
+router.post('/become-volunteer', async (req, res) => {
     const {name, email, message } = req.body;
 
     // Create a nodemailer transporter
@@ -243,8 +243,8 @@ router.post('/vol-send-email', async (req, res) => {
     // Email options
     const mailOptions = {
         from: email,
-        to: 'asiomizunoah@gmail.com',  // Your email
-        subject: 'Contact Form Submission',
+        to: 'orphanlifefoundationuganda.org@gmail.com',  // Your email
+        subject: 'Application to become a Volunteer at Orphan Life Foundation Uganda',
         text: `Name: ${name}\nEmail: ${email}\nReason: ${message}`
     };
 
@@ -260,8 +260,8 @@ router.post('/vol-send-email', async (req, res) => {
 });
 
 // Contct form submission
-router.post('/send-email', async (req, res) => {
-    const {name, email, message } = req.body;
+router.post('/make-donation', async (req, res) => {
+    const {name, email, donation, other } = req.body;
 
     // Create a nodemailer transporter
     const transporter = nodemailer.createTransport({
@@ -275,9 +275,9 @@ router.post('/send-email', async (req, res) => {
     // Email options
     const mailOptions = {
         from: email,
-        to: 'asiomizunoah@gmail.com',  // Your email
-        subject: 'Contact Form Submission',
-        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+        to: 'orphanlifefoundationuganda.org@gmail.com',  // Your email
+        subject: 'Donation to Orphan Life Foundation', 
+        text: `Name: ${name}\nEmail: ${email}\nDonation: ${donation}\nOther Amount: ${other}`
     };
 
     try {
@@ -289,6 +289,38 @@ router.post('/send-email', async (req, res) => {
         console.error(error);
         res.status(500).send('Error sending email');
     }
+});
+
+// Send message
+router.post('/sendMessage', async (req, res) => {
+  const {name, email, message } = req.body;
+
+  // Create a nodemailer transporter
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'asiomizunoah@gmail.com',
+        pass: 'sjkk bqkf pedt utvb'
+    }
+  });
+
+  // Email options
+  const mailOptions = {
+      from: email,
+      to: 'orphanlifefoundationuganda.org@gmail.com',  // Your email
+      subject: 'Message through Orphan Life Foundation Uganda Website',
+      text: `Name: ${name}\nEmail: ${email}\nReason: ${message}`
+  };
+
+  try {
+      // Send the email
+      await transporter.sendMail(mailOptions);
+      req.flash('success', 'Email sent successfully');
+      res.redirect('/');
+  } catch (error) {
+      console.error(error);
+      res.status(500).send('Error sending email');
+  }
 });
 
 

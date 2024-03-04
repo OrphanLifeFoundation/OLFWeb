@@ -417,6 +417,12 @@ a:focus {
   overflow: hidden;
 }
 
+.carousel .carousel-img img {
+  width: auto;
+  min-height: 300px;
+  object-fit: cover;
+}
+
 .carousel .carousel-img::after {
   position: absolute;
   content: "";

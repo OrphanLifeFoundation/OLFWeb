@@ -12,7 +12,7 @@
                               Lorem ipsum dolor sit amet elit. Phasellus ut mollis mauris. Vivamus egestas eleifend dui ac consequat at lectus in malesuada
                           </p>
                           <div class="carousel-btn">
-                              <a class="btn btn-custom" href="#">Donate Now</a>
+                              <a class="btn btn-custom" href="#donate">Donate Now</a>
                           </div>
                       </div>
                   </div>
@@ -26,7 +26,7 @@
                               Morbi sagittis turpis id suscipit feugiat. Suspendisse eu augue urna. Morbi sagittis, orci sodales varius fermentum, tortor
                           </p>
                           <div class="carousel-btn">
-                              <a class="btn btn-custom" href="#">Donate Now</a>
+                              <a class="btn btn-custom" href="#donate">Donate Now</a>
                           </div>
                       </div>
                   </div>
@@ -40,7 +40,7 @@
                               Sed ultrices, est eget feugiat accumsan, dui nibh egestas tortor, ut rhoncus nibh ligula euismod quam. Proin pellentesque odio
                           </p>
                           <div class="carousel-btn">
-                              <a class="btn btn-custom" href="#">Donate Now</a>
+                              <a class="btn btn-custom" href="#donate">Donate Now</a>
                           </div>
                       </div>
                   </div>
@@ -325,24 +325,31 @@
                   </div>
                   <div class="col-lg-5">
                       <div class="donate-form">
-                          <form method="post" >
+                          <form method="post" action="make-donation">
                               <div class="control-group">
-                                  <input type="text" class="form-control" placeholder="Name" required="required" />
+                                  <input type="text" class="form-control" placeholder="Name" name="name" required="required" />
                               </div>
                               <div class="control-group">
-                                  <input type="email" class="form-control" placeholder="Email" required="required" />
+                                  <input type="email" class="form-control" name="email" placeholder="Email" required="required" />
                               </div>
                               <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                  <label class="btn btn-custom active">
-                                      <input type="radio" name="options" checked> $10
-                                  </label>
-                                  <label class="btn btn-custom">
-                                      <input type="radio" name="options"> $20
-                                  </label>
-                                  <label class="btn btn-custom">
-                                      <input type="radio" name="options"> $30
-                                  </label>
-                              </div>
+                                <label class="btn btn-custom active">
+                                    <input type="radio" name="donation" value="10$" checked> $10
+                                </label>
+                                <label class="btn btn-custom">
+                                    <input type="radio" name="donation" value="20$"> $20
+                                </label>
+                                <label class="btn btn-custom">
+                                    <input type="radio" name="donation" value="30$"> $30
+                                </label>
+                                <label class="btn btn-custom other-btn" >
+                                    <input type="radio" name="donation" value="Other Amount" onclick="toggleOther()"> Other
+                                </label>
+                                </div>
+                                
+                                <div class="control-group other" style="display: none;">
+                                    <input type="text" class="form-control" name="other" placeholder="Amount in dollars" required="required" />
+                                </div>
                               <div>
                                   <button class="btn btn-custom" type="submit">Donate Now</button>
                               </div>
@@ -497,7 +504,8 @@
               <div class="row align-items-center">
                   <div class="col-lg-5">
                       <div class="volunteer-form">
-                          <form method="post" >
+                          <div id="success"></div>
+                          <form method="post" action="become-volunteer" >
                               <div class="control-group">
                                   <input type="text" name="name" class="form-control" placeholder="Name" required="required" />
                               </div>
@@ -614,7 +622,7 @@
               </div>
               <div class="contact-form">
                       <div id="success"></div>
-                      <form name="sentMessage" id="contactForm" novalidate="novalidate" method="send-mail">
+                      <form action="sendMessage"  method="post">
                           <div class="control-group">
                               <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name" />
                               <p class="help-block text-danger"></p>
@@ -628,7 +636,7 @@
                               <p class="help-block text-danger"></p>
                           </div>
                           <div>
-                              <button class="btn btn-custom" type="submit" id="sendMessageButton">Send Message</button>
+                              <button class="btn btn-custom" type="submit" >Send Message</button>
                           </div>
                       </form>
                   </div>
