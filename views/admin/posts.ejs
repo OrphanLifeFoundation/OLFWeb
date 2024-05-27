@@ -1,0 +1,44 @@
+<div class="admin_wrapper">
+    <div class="left-sidebar">
+        <ul>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/posts">Manage Causes</a></li>
+            <li><a href="/faq">Manage Team</a></li>
+            <li><a href="/latest-projects">Manage Testimonials</a></li>
+            <li><a href="/my-services">Manage Counter</a></li>
+        </ul>
+    </div>
+    <div class="admin-content">
+        <div class="button-group">
+            <a href="/add-post" class="btn admin-btn">Add Causes</a>
+            <a href="/posts" class="btn admin-btn">Manage Causes</a>
+        </div>
+
+        <div class="content">
+            <h2 class="page-title">Manage Causes</h2>
+           
+            <table>
+                <thead>
+                    <th>SN</th>
+                    <th>Causes</th>
+                    <th>Role</th>
+                    <th colspan="2">Action</th>
+                </thead>
+                <tbody>
+                    <% data.forEach(function(post, index) { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= post.title %></td>
+                            <td><a href="/edit-post/<%= post._id %>" class="edit">Edit</a></td>
+                            <td>
+                                <form action="/delete-post/<%= post._id %>?_method=DELETE" method="post">
+                                    <button type="submit" class="delete">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

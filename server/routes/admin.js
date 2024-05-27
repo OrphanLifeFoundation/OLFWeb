@@ -13,6 +13,8 @@ const storage = multer.memoryStorage();
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 
 const upload = multer({
     storage: storage,
@@ -34,112 +36,289 @@ const upload = multer({
 
 const adminLayout = '../views/layouts/admin';
 const jwtSecret = process.env.JWT_SECRET;
+
 /**
  * GET
  * Admin-login page
  */
 router.get('/login', async (req,  res) => {
     
-    try {
+  try {
 
-        const locals = {
-            title: "Login",
-        }
-    
-        res.render('admin/login', { 
-            locals, 
-            layout: adminLayout,
-            currentPage: 'login'
-        });
-    } catch (error) {
-        console.log('error');
-    }
+      const locals = {
+          title: "Login",
+      }
+  
+      res.render('admin/login', { 
+          locals
+      });
+  } catch (error) {
+      console.log('error');
+  }
 });
 
 /**
- * GET
- * Admin-register page
- */
+* GET
+* Admin-register page
+*/
 router.get('/register', async (req,  res) => {
-    
-    try {
+  
+  try {
 
-        const locals = {
-            title: "Register"
-        }
-    
-        res.render('admin/register', { 
-            locals, 
-            layout: adminLayout,
-            currentPage: 'register'
-        });
-    } catch (error) {
-        console.log('error');
-    }
+      const locals = {
+          title: "Register"
+      }
+  
+      res.render('admin/register', { 
+          locals
+      });
+  } catch (error) {
+      console.log('error');
+  }
 });
 
 /**
- * Post
- * Admin login 
+ * POST
+ * Admin Register 
  */
+router.post('/admin/register', async (req, res) => {
+  try {
+      const { username, email, password } = req.body;
+      const hashedPassword = await bcrypt.hash(password, 10);
+      
+      if (!email || !password) {
+          req.flash('error', 'Both Email and Password required');
+          return res.redirect('/register');
+      } else if (password.length < 8) {
+          req.flash('error', 'Password must be at least 8 characters');
+          return res.redirect('/register');
+      } else {
+          try {
+              const user = await User.create({ username, email, password: hashedPassword });
+              req.flash('success', 'User Created');
+              return res.redirect('/login');
+          } catch (error) {
+              if (error.message.includes('duplicate key error')) {
+                  req.flash('error', 'Username already in use');
+                  return res.redirect('/register');
+              }
+              res.status(500).json({ message: 'Internal server error' });
+          }
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+/**
+* Post
+* Admin login 
+*/
 router.post('/admin/login', async (req,  res) => {
-    
-    try {
+  
+  try {
 
-        const { username, password } = req.body;
-        
-        const user = await User.findOne({username});
-        if(!user) {
-            req.flash('error', 'Invalid credentials')
-            return res.redirect('/admin/login')
-        }
+      const { username, password } = req.body;
+      
+      const user = await User.findOne({username});
+      if(!user) {
+          req.flash('error', 'Invalid credentials')
+          return res.redirect('/login')
+      }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+      const isPasswordValid = await bcrypt.compare(password, user.password);
 
-        if(!isPasswordValid) {
-            req.flash('error', 'Invalid credentials')
-            return res.redirect('/admin/login')
-        }
+      if(!isPasswordValid) {
+          req.flash('error', 'Invalid credentials')
+          return res.redirect('/login')
+      }
 
-        const token = jwt.sign({ userId: user._id}, jwtSecret);
-        res.cookie('token', token, { httpOnly: true});
-        res.redirect('/dashboard');
-        req.flash('success', 'You are logged in')
+      const token = jwt.sign({ userId: user._id}, jwtSecret);
+      res.cookie('token', token, { httpOnly: true});
+      res.redirect('/dashboard');
+      req.flash('success', 'You are logged in')
 
-    
-       
-    } catch (error) {
-        console.log('error');
-    }
+  
+     
+  } catch (error) {
+      console.log('error');
+  }
 }); 
 
 /**
- * check-login 
- */
+* check-login 
+*/
 const authMiddleware = async (req, res, next) => {
-    const token = req.cookies.token;
+  const token = req.cookies.token;
 
-    if (!token) {
-        return res.redirect('/'); // Redirect unauthorized users to index.ejs
-    }
+  if (!token) {
+      return res.redirect('/'); // Redirect unauthorized users to index.ejs
+  }
 
-    try {
-        const decoded = jwt.verify(token, jwtSecret);
-        req.userId = decoded.userId;
+  try {
+      const decoded = jwt.verify(token, jwtSecret);
+      req.userId = decoded.userId;
 
-        // Check if the authenticated user is an admin
-        const user = await User.findById(req.userId);
-        if (!user || !user.isAdmin) {
-            return res.redirect('/'); // Redirect non-admin users to index.ejs
-        }
+      // Check if the authenticated user is an admin
+      const user = await User.findById(req.userId);
+      if (!user || !user.isAdmin) {
+          return res.redirect('/'); // Redirect non-admin users to index.ejs
+      }
 
-        next();
-    } catch (error) {
-        return res.redirect('/'); // Redirect unauthorized users to index.ejs
-    }
+      next();
+  } catch (error) {
+      return res.redirect('/'); // Redirect unauthorized users to index.ejs
+  }
 };
 
+//FORGOT PASSWORD
+// Define nodemailer transporter
+const transporter = nodemailer.createTransport({
+service: 'gmail',
+auth: {
+  user: 'asiomizunoah@gmail.com',
+  pass: 'sjkk bqkf pedt utvb' // Replace with your Gmail password
+}
+});
 
+/**
+* GET
+* Forgot password page
+*/
+router.get('/forgot-password', async (req, res) => {
+
+const locals = {
+  title: "Forgot Password"
+}
+try {
+  res.render('admin/forgot-password', {
+    locals,
+    currentPage: 'forgot-password'
+  });
+} catch (error) {
+  console.log(error);
+  res.status(500).send('Internal Server Error');
+}
+});
+
+/**
+* POST
+* Forgot password form submission
+*/
+router.post('/forgot-password', async (req, res) => {
+try {
+  const { email } = req.body;
+
+  // Find user by email
+  const user = await User.findOne({ email });
+  if (!user) {
+    req.flash('error', 'User with this email does not exist');
+    return res.redirect('/forgot-password');
+  }
+
+  // Generate and set reset token
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  user.resetPasswordToken = resetToken;
+  user.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour expiration
+
+  // Save user with token (ensure asynchronous save completes)
+  await user.save();
+
+  // Prepare encoded reset link
+  const encodedToken = encodeURIComponent(resetToken); // Encode spaces
+  const resetLink = `http://${req.headers.host}/reset-password/${encodedToken}`;
+
+  // Send password reset email
+  const mailOptions = {
+    from: 'asiomizunoah@gmail.com', // Consider using a dedicated email address for security
+    to: email,
+    subject: 'Reset your password',
+    html: `
+      <p>You are receiving this because you (or someone else) have requested the reset of the password for your account.</p>
+      <p>Please click on the following link, or paste this into your browser to complete the process:</p>
+      <p><a href="${resetLink}">Reset Password</a></p>
+      <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
+    `
+  };
+
+  await transporter.sendMail(mailOptions);
+
+  req.flash('success', 'Password reset email sent');
+  res.redirect('/forgot-password');
+} catch (error) {
+  console.error(error);
+  res.status(500).send('Internal Server Error');
+}
+});
+
+
+
+/**
+* GET
+* Reset password page
+*/
+router.get('/reset-password/:token', async (req, res) => {
+try {
+  const { token } = req.params;
+  const user = await User.findOne({
+    resetPasswordToken: token,
+    resetPasswordExpires: { $gt: Date.now() }
+  });
+
+  if (!user) {
+    req.flash('error', 'Password reset token is invalid or has expired');
+    return res.redirect('/forgot-password');
+  }
+
+  // Render the password reset page with necessary data
+  res.render('admin/reset-password', {
+    locals: {
+      title: 'Reset Password'
+    },
+    currentPage: 'reset-password',
+    token // Pass the token to the view
+  });
+} catch (error) {
+  console.error(error);
+  res.status(500).send('Internal Server Error');
+}
+});
+
+
+/**
+* POST
+* Reset password form submission
+*/
+router.post('/reset-password/:token', async (req, res) => {
+try {
+  const { token } = req.params;
+  const { password } = req.body;
+  const user = await User.findOne({
+    resetPasswordToken: token,
+    resetPasswordExpires: { $gt: Date.now() }
+  });
+
+  if (!user) {
+    req.flash('error', 'Password reset token is invalid or has expired');
+    return res.redirect('/forgot-password');
+  }
+
+  // Reset password and remove reset token
+  user.password = await bcrypt.hash(password, 10);
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+  await user.save();
+
+  req.flash('success', 'Password reset successfully');
+  res.redirect('/login');
+} catch (error) {
+  console.log(error);
+  res.status(500).send('Internal Server Error');
+}
+});
+
+//FORGOT PASSWORD
 
 
 /**
@@ -166,41 +345,6 @@ router.get('/dashboard', authMiddleware, async (req,  res) => {
 
 
 /**
- * POST
- * Admin Register 
- */
-router.post('/admin/register', async (req, res) => {
-    try {
-        const { username, email, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 10);
-        
-        if (!email || !password) {
-            req.flash('error', 'Both Email and Password required');
-            return res.redirect('/admin/register');
-        } else if (password.length < 8) {
-            req.flash('error', 'Password must be at least 8 characters');
-            return res.redirect('/admin/register');
-        } else {
-            try {
-                const user = await User.create({ username, email, password: hashedPassword });
-                req.flash('success', 'User Created');
-                return res.redirect('/admin/login');
-            } catch (error) {
-                if (error.message.includes('duplicate key error')) {
-                    req.flash('error', 'Username already in use');
-                    return res.redirect('/admin/register');
-                }
-                res.status(500).json({ message: 'Internal server error' });
-            }
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
-
-
-/**
  * GET
  * Admin Create New Post
  */
@@ -213,10 +357,8 @@ router.get('/add-post', authMiddleware, async (req,  res) => {
         }
 
         const data = await Post.find();
-        const topics = await Topic.find();
         res.render('admin/add-post', {
             locals,
-            topics,
             data,
             currentPage: 'add-post',
             layout: adminLayout,
@@ -244,15 +386,17 @@ router.post('/add-post', authMiddleware, upload.single('image'), async (req,  re
             };
     
             const newPost = new Post({
-                topic: req.body.topic,
                 title: req.body.title,
+                target: req.body.target,
+                raised: req.body.raised,
+                percentage: req.body.percentage,
                 preview: req.body.preview,
                 body: req.body.body,
                 image: imageObject
             });
 
             await Post.create(newPost);
-            res.redirect('/dashboard');
+            res.redirect('/posts');
             req.flash('success', 'Post Added');
 
             
@@ -263,6 +407,28 @@ router.post('/add-post', authMiddleware, upload.single('image'), async (req,  re
         console.log(error);
     } 
 }); 
+
+/**
+ * GET
+ * Admin posts page
+ */
+router.get('/posts', authMiddleware, async (req, res) => {
+  try {
+      const locals = {
+          title: "posts",
+      };
+
+      const data = await Post.find();
+      res.render('admin/posts', {
+          locals,
+          data,
+          layout: adminLayout,
+          currentPage: 'posts'
+      });
+  } catch (error) {
+      console.log(error);
+  }
+});
 
 router.get('/post/:id', authMiddleware, async (req, res) => {
     try {
@@ -293,14 +459,10 @@ router.get('/edit-post/:id', authMiddleware, async (req, res) => {
       };
   
       const data = await Post.findOne({ _id: req.params.id });
-      const topics = await Topic.find();
-      const topic = await Topic.find();
   
       res.render('admin/edit-post', {
         locals,
         data,
-        topic, 
-        topics,
         layout: adminLayout,
         currentPage: 'edit-post'
       })
@@ -325,16 +487,17 @@ router.put('/edit-post/:id', authMiddleware, upload.single('image'), async (req,
         };
        
         await Post.findByIdAndUpdate(req.params.id, {
-
-            topic: req.body.topic,
             title: req.body.title,
+            target: req.body.target,
+            raised: req.body.raised,
+            percentage: req.body.percentage,
             preview: req.body.preview,
             body: req.body.body,
             updatedAt: Date.now(),
             image: imageObject
         });
 
-        res.redirect('/dashboard');
+        res.redirect('/posts');
 
     } catch (error) {
         console.log(error);
@@ -349,7 +512,7 @@ router.delete('/delete-post/:id', authMiddleware, async (req, res) => {
 
     try {
         await Post.deleteOne( { _id: req.params.id });
-        res.redirect('/dashboard');
+        res.redirect('/posts');
         req.flash('success', 'Post Deleted');
     } catch (error) {
         console.log('error')
@@ -522,7 +685,7 @@ router.post('/create-user', authMiddleware, async (req, res) => {
  //
 router.get('/add-project', authMiddleware, (req, res) => {
     const locals = {
-      title: 'Add Project',
+      title: 'Add Testimonial',
       currentPage: 'add-project',
       layout: adminLayout,
     };
@@ -545,9 +708,9 @@ router.post('/add-project', authMiddleware, upload.single('image'), async (req, 
       };
   
       const newProject = new Project ({
-        title: req.body.title,
-        body: req.body.body,
-        preview: req.body.preview,
+        name: req.body.name,
+        profession: req.body.profession,
+        testimony: req.body.testimony,
         image: imageObject
       });
   
@@ -570,7 +733,7 @@ router.post('/add-project', authMiddleware, upload.single('image'), async (req, 
  router.get('/latest-projects', authMiddleware, async (req, res) => {
     try {
         const locals = {
-            title: "Latest Projects",
+            title: "Testimonials",
         };
 
       const projects = await Project.find(); // Fetch all projects from the database
@@ -597,7 +760,7 @@ router.post('/add-project', authMiddleware, upload.single('image'), async (req, 
   router.get('/edit-project/:id', authMiddleware, async (req, res) => {
     try {
         const locals = {
-            title: "Edit project",
+            title: "Edit Testimonial",
         };
         
       const projectId = req.params.id;
@@ -632,9 +795,9 @@ router.post('/add-project', authMiddleware, upload.single('image'), async (req, 
       };
   
       // Update the project properties
-      project.title = req.body.title;
-      project.body = req.body.body;
-      project.preview = req.body.preview;
+      project.name = req.body.name;
+      project.profession = req.body.profession;
+      project.testimony = req.body.testimony;
       project.image = imageObject;
   
       await project.save(); // Save the updated project
@@ -833,9 +996,10 @@ router.post('/add-topic', authMiddleware,  async (req, res) => {
  router.post('/add-service', authMiddleware, upload.single('image'), async (req, res) => {
     try {
       const newService = new Service ({
-        title: req.body.title,
-        body: req.body.body,
-        preview: req.body.preview,
+        districts: req.body.districts,
+        volunteers: req.body.volunteers,
+        goal: req.body.goal,
+        raised: req.body.raised,
       });
   
       await Service.create(newService);
@@ -899,9 +1063,10 @@ router.post('/edit-service/:id', authMiddleware, upload.single('image'),  async 
       const service = await Service.findById(serviceId);
   
       // Update the service properties
-      service.title = req.body.title;
-      service.body = req.body.body;
-      service.preview = req.body.preview;
+      service.districts = req.body.districts;
+      service.volunteers = req.body.volunteers;
+      service.goal = req.body.goal;
+      service.raised = req.body.raised;
   
       await service.save(); // Save the updated service
   
@@ -938,13 +1103,13 @@ router.post('/edit-service/:id', authMiddleware, upload.single('image'),  async 
     }
   });
 
-    //**
+  //**
   //GET
  // Admin Add faqs
  //
  router.get('/add-faq', authMiddleware, (req, res) => {
   const locals = {
-      title: 'Add faq',
+      title: 'Add Team',
       layout: adminLayout,
     };
   res.render('admin/add-faq',{
@@ -958,12 +1123,19 @@ router.post('/edit-service/:id', authMiddleware, upload.single('image'),  async 
 //POST
 // Admin Add faqs
 //
-router.post('/add-faq', authMiddleware, async (req, res) => {
+router.post('/add-faq', authMiddleware, upload.single('image'), async (req, res) => {
   try {
+
+    const imageObject = {
+      data: req.file.buffer,
+      contentType: req.file.mimetype
+    };
+
     const newfaq = new Faq ({
-      qstn: req.body.qstn,
-      ans: req.body.ans,
-      description: req.body.description
+      name: req.body.name,
+      position: req.body.position,
+      description: req.body.description,
+      image: imageObject
     });
 
     await Faq.create(newfaq);
@@ -983,7 +1155,7 @@ router.post('/add-faq', authMiddleware, async (req, res) => {
  router.get('/faq', authMiddleware, async (req, res) => {
   try {
       const locals = {
-          title: "Frequently asked questions."
+          title: "Team Members."
       };
 
       const faqs = await Faq.find(); 
@@ -1008,7 +1180,7 @@ router.post('/add-faq', authMiddleware, async (req, res) => {
 router.get('/edit-faq/:id', authMiddleware, async (req, res) => {
   try {
       const locals = {
-          title: 'Edit faq'
+          title: 'Edit Member'
       };
 
       const faq = await Faq.findOne({ _id: req.params.id });
@@ -1032,28 +1204,23 @@ router.get('/edit-faq/:id', authMiddleware, async (req, res) => {
 //
 router.post('/edit-faq/:id', authMiddleware, async (req, res) => {
   try {
-    const faqId = req.params.id;
-    const faq = await Faq.findById(faqId);
+    const imageObject = {
+        data: req.file.buffer,
+        contentType: req.file.mimetype
+    };
+   
+    await Faq.findByIdAndUpdate(req.params.id, {
 
-    if (!faq) {
-      // faq not found
-      return res.status(404).json({ error: 'faq not found' });
-    }
+        name: req.body.name,
+        position: req.body.position,
+        image: imageObject
+    });
 
-    // Update the faq properties
-    faq.qstn = req.body.qstn;
-    faq.ans = req.body.ans;
-    faq.description = req.body.description;
+    res.redirect('/faqs');
 
-    await Faq.save();
-
-    res.redirect('/faq');
-  } catch (error) {
-    console.error(error);
-
-    // Handle error response
-    res.status(500).json({ error: 'Internal server error' });
-  }
+} catch (error) {
+    console.log(error);
+} 
 });
 
    //**
@@ -1074,14 +1241,5 @@ router.delete('/delete-faq/:id', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-
-  
-
-
-
-
-
-
 
 module.exports = router, { authMiddleware };

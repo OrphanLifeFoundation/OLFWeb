@@ -29,13 +29,23 @@ router.use(bodyParser.urlencoded({ extended: true }));
 */
 router.get('', async (req, res) => {
   try {
+
+    const data = await Post.find();
+    const faqs = await Faq.find();
+    const projects = await Project.find();
+    const services = await Service.find();
+
     const locals = {
       title: "Orphan LIfe Foundation",
       description: "Charity website"
     }
 
     res.render('index', { 
-      locals
+      locals,
+      data,
+      faqs,
+      projects,
+      services
     });
 
   } catch (error) {
@@ -302,7 +312,7 @@ router.post('/sendMessage', async (req, res) => {
         user: 'asiomizunoah@gmail.com',
         pass: 'sjkk bqkf pedt utvb'
     }
-  });
+  }); 
 
   // Email options
   const mailOptions = {
@@ -332,13 +342,20 @@ router.get('/about', async (req, res) => {
 
   try {
 
+    const faqs = await Faq.find();
+    const projects = await Project.find();
+    const services = await Service.find();
+
     const locals = {
       title: 'About',
       description: 'Your about page description'// Pass the projects data to the template
     };
 
     res.render('about', {
-      locals
+      locals,
+      faqs,
+      services,
+      projects
     }); // Render the about.ejs template with projects data
   } catch (error) {
     console.error(error);

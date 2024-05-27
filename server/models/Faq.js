@@ -1,9 +1,19 @@
 const mongoose = require('mongoose');
 
 const faqSchema = new mongoose.Schema({
-    qstn: String,
-    description: [String],
-    ans: [String]
+    name: {
+        type: String,
+        required: Boolean,
+    },
+    position: {
+        type: String,
+        required: Boolean,
+    },
+    image: {
+        data: Buffer, 
+        contentType: String, 
+        required: Boolean, 
+      }, 
   });
   
   // Create a Faq model based on the schema

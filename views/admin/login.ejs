@@ -12,24 +12,29 @@
             <li><%= messages.success %></li>
         </ul>
         <% } %>
-        <h2 class="heading">Sign in</h2>
-    <form action="/admin/login" method="post">
+        <h2 class="heading">Sign In</h2>
+    <form action="/admin/login" method="post" class="add-post">
 
-        
+        <h3>Enter your account credentials to log in</h3>
+
         <div class="input-box">
             <label for="username"><b>Username</b></label>
         <input type="text" name="username" id="" placeholder="Enter Username">
         </div>
+
         <div class="input-box">
-            <label for="passwword">Password</label>
-            <input type="password" name="password" id="" placeholder="Enter Password">
+            <label for="password"><b>Password</b></label>
+            <input type="password" name="password" id="passwordInput" placeholder="Enter Password">
         </div>
         
     
-        <input type="submit" value="Login" class="btn">
+        <button type="submit" class="btn btn-primary">Sign In</button>
+
+        <p><a href="/forgot-password">Forgot Password</a></p>
 
         <p>Or <a href="/register">Sign Up</a></p>
     </form>
 
 </div>
+
 

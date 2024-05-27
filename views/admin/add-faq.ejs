@@ -2,22 +2,20 @@
 <div class="admin_wrapper">
     <div class="left-sidebar">
         <ul>
-            <li><a href="/dashboard">Manage Posts</a></li>
-            <li><a href="/topics">Manage Topics</a></li>
-            <li><a href="/users">Manage Users</a></li>
-            <li><a href="/latest-projects">Manage Projects</a></li>
-            <li><a href="/my-services">Manage Services</a></li>
-            <li><a href="/faq">Manage Faqs</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/posts">Manage Causes</a></li>
+            <li><a href="/faq">Manage Team</a></li>
+            <li><a href="/latest-projects">Manage Testimonials</a></li>
         </ul>
     </div>
     <div class="admin-content">
         <div class="button-group">
-            <a href="/add-faq" class="btn">Add New Faq</a>
-            <a href="/faq" class="btn">Manage Faqs</a>
+            <a href="/add-faq" class="btn">Add New Member</a>
+            <a href="/faq" class="btn">Manage Team</a>
         </div>
 
         <div class="content">
-            <h2 class="page-title">Add Posts</h2>
+            <h2 class="page-title">Add Team Member</h2>
 
             <% if(messages.error){ %>
                 <ul class="error">
@@ -25,26 +23,26 @@
                 </ul>
             <% } %>
             
-            <form action="/add-faq" method="POST" class="add-post">
+            <form action="/add-faq" method="POST" enctype="multipart/form-data" class="add-post">
 
                 <div >
-                    <label for="qstn">Faq</label>
-                    <input type="text" name="qstn" class="text-input">
+                    <label for="qstn">Member's Name</label>
+                    <input type="text" name="name" class="text-input">
                 </div>
 
                 <div >
-                    <label for="Description">Description</label>
-                    <textarea name="description" id="" cols="50" rows="10" class="text-input"></textarea>
+                    <label for="Description">Position</label>
+                    <textarea name="position" id="" cols="50" rows="10" class="text-input"></textarea>
                 </div>
 
                 <div >
-                    <label for="ans">Answer</label>
-                    <textarea name="ans" id="mytextarea" cols="50" rows="10" class="text-input"></textarea>
+                    <label for="image">Member's Photo</label>
+                    <input type="file" name="image" id="">
                 </div>
 
               
                 <div>
-                    <input type="submit" class="btn" value="Add Faq">
+                    <input type="submit" class="btn" value="Submit">
                 </div>
             </form>
 

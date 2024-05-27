@@ -5,12 +5,13 @@
         </ul>
         <% } %>
         <h2 class="heading">Sign up</h2>
-    <form action="/admin/register" method="post">
+    <form action="/admin/register" method="post" class="add-post">
 
+      <h3>Enter correct information to create an account</h3>
         
         <div class="input-box">
-            <label for="username"><b>Username</b></label>
-        <input type="text" name="username" id="" placeholder="Enter Username">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="" placeholder="Enter Username">
         </div>
         <div class="input-box">
             <label for="email">Email</label>
@@ -22,8 +23,9 @@
         </div>
         
     
-        <input type="submit" value="Register" class="btn">
+        <button type="submit" class="btn">Sign Up</button>
         <p>Or <a href="/login">Sign In</a></p>
     </form>
 
 </div>
+

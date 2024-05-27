@@ -2062,7 +2062,6 @@ a:focus {
 
 .sidebar .category-widget ul li span {
   display: inline-block;
-  float: right;
 }
 
 .sidebar .sidebar-widget .tag-widget {
@@ -2226,4 +2225,281 @@ a:focus {
       margin: 5px 0;
       text-align: center;
   }
+}
+
+/* --- Footer----- */
+.footer .container .row {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 80%;
+  margin-left: none;
+}
+
+@media (max-width: 940px) {
+  .footer .container .row {
+    flex-flow: row wrap;
+    margin: auto;
+  }
+}
+
+.footer {
+  width: 100%;
+  margin: auto;
+}
+
+/* ADMIN SECTION */
+
+.header-admin {
+  width: 100%;
+  height: 4.4em;
+  background: var(--MAIN-COLOR);
+  border-bottom: 1px solid aliceblue;
+}
+
+.header-admin .nav {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%;
+}
+
+.auth-content.contact {
+  padding-top: 12em;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  background: plum;
+}
+
+.auth-content.contact h2 {
+  margin-bottom: 1em;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.auth-content.contact form {
+  margin: 3em auto;
+  max-width: 500px;
+  padding: 1em 2em;
+  border: 1px solid var(--MAIN-COLOR);
+  background: var(--MAIN-COLOR);
+  border-radius: 5px;
+  box-shadow: 0 0 0.5rem 0.5rem #000;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.auth-content.contact .input-box {
+  margin: 0.5em;
+}
+
+.auth-content  input {
+  padding: 5px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  background-color: gray;
+}
+
+.auth-content.contact label {
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+form button {
+  background: var(--HEADER-FOOTER);
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100px;
+  margin: 0.5em auto;
+}
+
+.admin_wrapper {
+  display: flex;
+  height: calc(85.5vh);
+  overflow-y: hidden;
+}
+
+.admin_wrapper .left-sidebar {
+  flex: 2;
+  height:100%;
+  background: var(--MAIN-COLOR);
+}
+
+.left-sidebar ul {
+  list-style-type: none;
+  width: 100%;
+}
+
+.admin_wrapper .admin-content {
+  background: plum;
+  flex: 8;
+  height: 100%;
+  padding: 40px 100px 5em 100px;
+  overflow-y: scroll;
+}
+
+/* Password Visiblity  *//* Styles for the toggle password button */
+.input-p {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.input-p button {
+  width: 80%;
+}
+
+.toggle-password {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.toggle-password:focus {
+  outline: none;
+}
+
+/* Styles for the eye icon */
+.toggle-password i {
+  font-size: 1rem;
+}
+
+/* Hide the password by default */
+#passwordInput[type="password"] {
+  padding-right: 35px;
+}
+
+
+
+/* Dashboard  */
+.bottom-section.admin {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.admin_wrapper .admin-content .content form {
+  background: none;
+  padding: 0 0;
+  margin: 0 0;
+}
+
+.admin_wrapper .admin-content .content table a:visited {
+  color: var(--TEXT-COLOR);
+}
+
+.button-group {
+  display: flex;
+  gap: 3em;
+  margin: 0 auto;
+}
+
+.admin-content .content {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 3em;
+}
+
+/* Add Posts */
+
+.admin_wrapper .admin-content .content form.add-post label {
+  font-size: 1.3rem;
+  margin-bottom: 0.2em;
+}
+
+.admin_wrapper .admin-content .content form.add-post input.text-input {
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 3px;
+  margin: 0.7rem;
+}
+
+.admin_wrapper .admin-content .content form.add-post select {
+  padding: 0.5rem  3rem;
+  font-size: 1rem;
+  margin: 0.7rem;
+}
+
+.admin_wrapper .admin-content .content form.add-post #img-input {
+  padding: 0.5rem  3rem;
+  font-size: 1rem;
+  margin: 0.7rem;
+}
+
+
+
+.admin_wrapper .left-sidebar ul li a {
+  font-size:1.2rem ;
+  color: var(--HEADER-FOOTER);
+  text-decoration: none;
+  padding: 18px;
+  display: block;
+  border-bottom: 1px solid aliceblue;
+}
+
+.admin_wrapper .left-sidebar ul li a:hover {
+  background: aliceblue;
+}
+
+.admin-content {
+  font-family: 'Poppins', sans-serif;
+}
+
+.admin-content a {
+  text-decoration: none;
+}
+
+.admin-content .page-title {
+  text-align: center;
+  padding: 1em;
+  color: var(--HEADER-FOOTER);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.1rem;
+}
+
+table a {
+  text-decoration: none;
+  color: var(--HEADER-FOOTER);
+}
+
+th, td {
+  text-align: left;
+  border-bottom: 1px solid var(--HEADER-FOOTER);
+}
+
+.edit {
+  color: green;
+}
+
+.delete {
+  color: red;
+}
+
+.publish {
+  color: blue;
+}
+
+.edit:hover, 
+.delete:hover, 
+.publish:hover {
+  color: #fff;
+  text-decoration: underline;
+  transition: all 0.3s ease-out;
+}
+
+tr {
+  line-height: 2em;
+}
+tr:hover {
+  background: #32394652;
 }

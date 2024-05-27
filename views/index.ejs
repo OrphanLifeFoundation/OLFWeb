@@ -9,7 +9,7 @@
                       <div class="carousel-text">
                           <h1>Let's be kind for children</h1>
                           <p>
-                              Lorem ipsum dolor sit amet elit. Phasellus ut mollis mauris. Vivamus egestas eleifend dui ac consequat at lectus in malesuada
+                            Your kindness can provide essential resources, education, and support to children in need. Together, we can build a brighter future for them.
                           </p>
                           <div class="carousel-btn">
                               <a class="btn btn-custom" href="#donate">Donate Now</a>
@@ -23,7 +23,7 @@
                       <div class="carousel-text">
                           <h1>Get Involved with helping hand</h1>
                           <p>
-                              Morbi sagittis turpis id suscipit feugiat. Suspendisse eu augue urna. Morbi sagittis, orci sodales varius fermentum, tortor
+                            Your involvement can change lives, offering hope and opportunities to those who need it most. Let's work together to create a better world for everyone.
                           </p>
                           <div class="carousel-btn">
                               <a class="btn btn-custom" href="#donate">Donate Now</a>
@@ -37,7 +37,7 @@
                       <div class="carousel-text">
                           <h1>Bringing smiles to millions</h1>
                           <p>
-                              Sed ultrices, est eget feugiat accumsan, dui nibh egestas tortor, ut rhoncus nibh ligula euismod quam. Proin pellentesque odio
+                           Help us bring joy and happiness to millions of people through our dedicated programs and initiatives. Your support makes all the difference.
                           </p>
                           <div class="carousel-btn">
                               <a class="btn btn-custom" href="#donate">Donate Now</a>
@@ -173,14 +173,15 @@
       
       
       <!-- Facts Start -->
-      <div class="facts" data-parallax="scroll" data-image-src="img/facts.jpg">
+      <div class="facts" id="facts" data-parallax="scroll" data-image-src="img/facts.jpg">
           <div class="container">
+                <% services.forEach(fact => { %>
               <div class="row">
                   <div class="col-lg-3 col-md-6">
                       <div class="facts-item">
                           <i class="flaticon-home"></i>
                           <div class="facts-text">
-                              <h3 class="facts-plus" data-toggle="counter-up">10</h3>
+                              <h3 class="facts-plus" data-toggle="counter-up"><%= fact.districts %></h3>
                               <p>Districts</p>
                           </div>
                       </div>
@@ -189,7 +190,7 @@
                       <div class="facts-item">
                           <i class="flaticon-charity"></i>
                           <div class="facts-text">
-                              <h3 class="facts-plus" data-toggle="counter-up">400</h3>
+                              <h3 class="facts-plus" data-toggle="counter-up"><%= fact.volunteers %></h3>
                               <p>Volunteers</p>
                           </div>
                       </div>
@@ -198,8 +199,8 @@
                       <div class="facts-item">
                           <i class="flaticon-kindness"></i>
                           <div class="facts-text">
-                              <h3 class="facts-dollar" data-toggle="counter-up">10000</h3>
-                              <p>Our Goal 2024</p>
+                              <h3 class="facts-dollar" data-toggle="counter-up"><%= fact.goal %></h3>
+                              <p>Our Goal</p>
                           </div>
                       </div>
                   </div>
@@ -207,97 +208,63 @@
                       <div class="facts-item">
                           <i class="flaticon-donation"></i>
                           <div class="facts-text">
-                              <h3 class="facts-dollar" data-toggle="counter-up">100</h3>
+                              <h3 class="facts-dollar" data-toggle="counter-up"><%= fact.raised %></h3>
                               <p>Raised</p>
                           </div>
                       </div>
                   </div>
               </div>
+              <% }); %>
           </div>
       </div>
       <!-- Facts End -->
       
       
       <!-- Causes Start -->
-      <div class="causes">
+      <div class="causes" id="causes">
           <div class="container">
               <div class="section-header text-center">
                   <p>Charity Causes</p>
                   <h2>Know about charity causes in Orphan Life Foundation Uganda</h2>
               </div>
               <div class="owl-carousel causes-carousel">
+                <% if (data.length === 0) { %>
+                    <p>No Charity Causes available at the moment.</p>
+                  <% } else { %>
+                    <% data.forEach(cause => { %>
                   <div class="causes-item">
                       <div class="causes-img">
-                          <img src="img/causes-1.jpg" alt="Image">
+                          <% if (cause.image.contentType) { %>
+                            <!-- Render image data as Base64-encoded string -->
+                            <img  src="data:<%= cause.image.contentType %>;base64,<%= cause.image.data.toString('base64') %>" alt="">
+                            <% } else { %>
+                            <!-- Render image URL -->
+                            <img  src="<%= cause.image %>" alt="">
+                            <% } %>
                       </div>
                       <div class="causes-progress">
-                          <!-- <div class="progress">
+                          <div class="progress">
                               <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                                  <span>85%</span>
+                                  <span><%= cause.percentage %></span>
                               </div>
-                          </div> -->
+                          </div>
                           <div class="progress-text">
-                              <p><strong>Raised:</strong> $1000</p>
-                              <p><strong>Goal:</strong> $150000</p>
+                              <p><strong>Raised:</strong> $<%= cause.raised %></p>
+                              <p><strong>Goal:</strong> $<%= cause.target %></p>
                           </div>
                       </div>
                       <div class="causes-text">
-                          <h3>Construction of Children's Shelter</h3>
-                          <p>This will house those orphans living with us in at the foundation. The current shelter is rented. </p>
+                          <h3><%= cause.title %></h3>
+                          <p><%= cause.preview %> </p>
                       </div>
                       <div class="causes-btn">
-                          <a class="btn btn-custom">Learn More</a>
-                          <a class="btn btn-custom">Donate Now</a>
+                          <a href="/cause/<%= cause._id %>" class="btn btn-custom">Learn More</a>
+                          <a href="#donate" class="btn btn-custom">Donate Now</a>
                       </div>
                   </div>
-                  <div class="causes-item">
-                      <div class="causes-img">
-                          <img src="img/causes-2.jpg" alt="Image">
-                      </div>
-                      <div class="causes-progress">
-                          <!-- <div class="progress">
-                              <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                                  <span>85%</span>
-                              </div>
-                          </div> -->
-                          <div class="progress-text">
-                              <p><strong>Raised:</strong> $7000</p>
-                              <p><strong>Goal:</strong> $5000</p>
-                          </div>
-                      </div>
-                      <div class="causes-text">
-                          <h3>School Fees Payment</h3>
-                          <p>School Fees for 4 Kids in Ombaci P/s. These are our most hardworking children in our foundation.</p>
-                      </div>
-                      <div class="causes-btn">
-                          <a class="btn btn-custom">Learn More</a>
-                          <a class="btn btn-custom">Donate Now</a>
-                      </div>
-                  </div>
-                  <div class="causes-item">
-                      <div class="causes-img">
-                          <img src="img/causes-3.jpg" alt="Image">
-                      </div>
-                      <div class="causes-progress">
-                          <!-- <div class="progress">
-                              <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                                  <span>85%</span>
-                              </div>
-                          </div> -->
-                          <div class="progress-text">
-                              <p><strong>Raised:</strong> $1400</p>
-                              <p><strong>Goal:</strong> $6,800</p>
-                          </div>
-                      </div>
-                      <div class="causes-text">
-                          <h3>Baby A'diru's Surgery</h3>
-                          <p>Resources for upcoming brain surgery of Baby A'diru in India in Jan 2025. she has a tummor in her brain.</p>
-                      </div>
-                      <div class="causes-btn">
-                          <a class="btn btn-custom">Learn More</a>
-                          <a class="btn btn-custom">Donate Now</a>
-                      </div>
-                  </div>
+                  <% }); %>
+                <% } %>
+                  
               </div>
           </div>
       </div>
@@ -363,7 +330,7 @@
       
       
       <!-- Event Start -->
-      <div class="event" id="events">
+      <!-- <div class="event" id="events">
           <div class="container">
               <div class="section-header text-center">
                   <p>Upcoming Events</p>
@@ -410,7 +377,7 @@
                   </div> -->
               </div>
           </div>
-      </div>
+      </div> -->
       <!-- Event End -->
 
 
@@ -422,74 +389,35 @@
                   <h2>Awesome people behind our charity activities</h2>
               </div>
               <div class="row">
+                <% if (faqs.length === 0) { %>
+                    <p>No Charity Team Members added at the moment.</p>
+                  <% } else { %>
+                    <% faqs.forEach(team => { %>
                   <div class="col-lg-3 col-md-6">
                       <div class="team-item">
                           <div class="team-img">
-                              <img src="img/director.webp" alt="Team Image">
+                              <% if (team.image.contentType) { %>
+                                <!-- Render image data as Base64-encoded string -->
+                                <img  src="data:<%= team.image.contentType %>;base64,<%= team.image.data.toString('base64') %>" alt="">
+                                <% } else { %>
+                                <!-- Render image URL -->
+                                <img  src="<%= team.image %>" alt="">
+                                <% } %>
                           </div>
                           <div class="team-text">
-                              <h2>Oria Emmanuel</h2>
-                              <p>Founder & Director</p>
-                              <div class="team-social">
+                              <h2><%= team.name %></h2>
+                              <p><%= team.position %></p>
+                              <!-- <div class="team-social">
                                   <a href=""><i class="fab fa-twitter"></i></a>
                                   <a href=""><i class="fab fa-facebook-f"></i></a>
                                   <a href=""><i class="fab fa-linkedin-in"></i></a>
                                   <a href=""><i class="fab fa-instagram"></i></a>
-                              </div>
+                              </div> -->
                           </div>
                       </div>
                   </div>
-                  <div class="col-lg-3 col-md-6">
-                      <div class="team-item">
-                          <div class="team-img">
-                              <img src="img/ceo.webp" alt="Team Image">
-                          </div>
-                          <div class="team-text">
-                              <h2>Guma Robert</h2>
-                              <p>Founder & CEO</p>
-                              <div class="team-social">
-                                  <a href=""><i class="fab fa-twitter"></i></a>
-                                  <a href=""><i class="fab fa-facebook-f"></i></a>
-                                  <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                  <a href=""><i class="fab fa-instagram"></i></a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-lg-3 col-md-6">
-                      <div class="team-item">
-                          <div class="team-img">
-                              <img src="img/project-ofc.webp" alt="Team Image">
-                          </div>
-                          <div class="team-text">
-                              <h2>Etoma Lameck</h2>
-                              <p>Project Officer</p>
-                              <div class="team-social">
-                                  <a href=""><i class="fab fa-twitter"></i></a>
-                                  <a href=""><i class="fab fa-facebook-f"></i></a>
-                                  <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                  <a href=""><i class="fab fa-instagram"></i></a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-lg-3 col-md-6">
-                      <div class="team-item">
-                          <div class="team-img">
-                              <img src="img/patron.webp" alt="Team Image">
-                          </div>
-                          <div class="team-text">
-                              <h2>Rev Erima Dan </h2>
-                              <p>Advisor/Patron</p>
-                              <div class="team-social">
-                                  <a href=""><i class="fab fa-twitter"></i></a>
-                                  <a href=""><i class="fab fa-facebook-f"></i></a>
-                                  <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                  <a href=""><i class="fab fa-instagram"></i></a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+                  <% }); %>
+                <% } %>
               </div>
           </div>
       </div>
@@ -548,62 +476,32 @@
                 <h2>What people are talking about our charity activities</h2>
             </div>
             <div class="owl-carousel testimonials-carousel">
+                <% if (projects.length === 0) { %>
+                    <p>No Testimonies available at the moment.</p>
+                  <% } else { %>
+                    <% projects.forEach(testimonial => { %>
                 <div class="testimonial-item">
                     <div class="testimonial-profile">
-                        <img src="img/" alt="Image">
+                        <% if (testimonial.image.contentType) { %>
+                            <!-- Render image data as Base64-encoded string -->
+                            <img  src="data:<%= testimonial.image.contentType %>;base64,<%= testimonial.image.data.toString('base64') %>" alt="">
+                            <% } else { %>
+                            <!-- Render image URL -->
+                            <img  src="<%= testimonial.image %>" alt="">
+                            <% } %>
                         <div class="testimonial-name">
-                            <h3>Person Name</h3>
-                            <p>Profession</p>
+                            <h3><%= testimonial.name %></h3>
+                            <p><%= testimonial.profession %></p>
                         </div>
                     </div>
                     <div class="testimonial-text">
                         <p>
-                            Lorem ipsum dolor sit amet elit. Phasel preti mi facilis ornare velit non vulputa. Aliqu metus tortor, auctor id gravid vivera quis
+                            <%= testimonial.testimony %>
                         </p>
                     </div>
                 </div>
-                <div class="testimonial-item">
-                    <div class="testimonial-profile">
-                        <img src="img/" alt="Image">
-                        <div class="testimonial-name">
-                            <h3>Person Name</h3>
-                            <p>Profession</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-text">
-                        <p>
-                            Lorem ipsum dolor sit amet elit. Phasel preti mi facilis ornare velit non vulputa. Aliqu metus tortor, auctor id gravid vivera quis
-                        </p>
-                    </div>
-                </div>
-                <div class="testimonial-item">
-                    <div class="testimonial-profile">
-                        <img src="img/" alt="Image">
-                        <div class="testimonial-name">
-                            <h3>Person Name</h3>
-                            <p>Profession</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-text">
-                        <p>
-                            Lorem ipsum dolor sit amet elit. Phasel preti mi facilis ornare velit non vulputa. Aliqu metus tortor, auctor id gravid vivera quis
-                        </p>
-                    </div>
-                </div>
-                <div class="testimonial-item">
-                    <div class="testimonial-profile">
-                        <img src="img/" alt="Image">
-                        <div class="testimonial-name">
-                            <h3>Person Name</h3>
-                            <p>Profession</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-text">
-                        <p>
-                            Lorem ipsum dolor sit amet elit. Phasel preti mi facilis ornare velit non vulputa. Aliqu metus tortor, auctor id gravid vivera quis
-                        </p>
-                    </div>
-                </div>
+                <% }); %>
+                <% } %>
             </div>
         </div>
       </div>

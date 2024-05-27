@@ -1,17 +1,17 @@
 <div id="top"></div>
-<header class="header">
+<header class="header-admin">
     
     <div class="nav">
 
         <div class="logo">
-            <p>aHUB</p>
+            <img src="/img/olf.png" width="50px" height="50px" alt="">
+        </div>
+
+        <div class="menu">
+          <a id="toggleDark"><i class="bx bx-moon Theme-icon"></i></a>
         </div>
      
-        <div class="menu-container">
-
-            <div class="nav-mode">
-                <a id="toggleDark"><i class="bx bx-moon Theme-icon"></i></a>
-            </div>
+        <div class="auth-container">
 
             <% if (currentPage === 'login') { %>
                 <div class=" ">
@@ -29,7 +29,7 @@
                         </button>
                     </a>
                 </div>
-            <% } else if (currentPage === 'dashboard' || currentPage === 'add-post' || currentPage === 'add-project'|| currentPage === 'add-service'|| currentPage === 'create-user'|| currentPage === 'edit-post'|| currentPage === 'edit-project'|| currentPage === 'edit-service'|| currentPage === 'edit-user'|| currentPage === 'latest-projects'|| currentPage === 'my-services'|| currentPage === 'users') { %>
+            <% } else if (currentPage === 'dashboard' || currentPage === 'add-post' || currentPage === 'add-project'|| currentPage === 'add-service'|| currentPage === 'create-user'|| currentPage === 'edit-post'|| currentPage === 'edit-project'|| currentPage === 'edit-service'|| currentPage === 'edit-user'|| currentPage === 'latest-projects'|| currentPage === 'my-services'|| currentPage === 'topics'|| currentPage === 'users') { %>
                 <div class=" ">
                     <a href="/logout">
                         <button class="logout_btn btn">

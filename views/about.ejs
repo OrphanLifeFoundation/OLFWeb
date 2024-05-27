@@ -62,14 +62,15 @@
         
         
         <!-- Facts Start -->
-        <div class="facts" data-parallax="scroll" data-image-src="img/facts.jpg">
+      <div class="facts" data-parallax="scroll" data-image-src="img/facts.jpg">
         <div class="container">
+              <% services.forEach(fact => { %>
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="facts-item">
                         <i class="flaticon-home"></i>
                         <div class="facts-text">
-                            <h3 class="facts-plus" data-toggle="counter-up">10</h3>
+                            <h3 class="facts-plus" data-toggle="counter-up"><%= fact.districts %></h3>
                             <p>Districts</p>
                         </div>
                     </div>
@@ -78,7 +79,7 @@
                     <div class="facts-item">
                         <i class="flaticon-charity"></i>
                         <div class="facts-text">
-                            <h3 class="facts-plus" data-toggle="counter-up">400</h3>
+                            <h3 class="facts-plus" data-toggle="counter-up"><%= fact.volunteers %></h3>
                             <p>Volunteers</p>
                         </div>
                     </div>
@@ -87,8 +88,8 @@
                     <div class="facts-item">
                         <i class="flaticon-kindness"></i>
                         <div class="facts-text">
-                            <h3 class="facts-dollar" data-toggle="counter-up">10000</h3>
-                            <p>Our Goal 2024</p>
+                            <h3 class="facts-dollar" data-toggle="counter-up"><%= fact.goal %></h3>
+                            <p>Our Goal</p>
                         </div>
                     </div>
                 </div>
@@ -96,164 +97,96 @@
                     <div class="facts-item">
                         <i class="flaticon-donation"></i>
                         <div class="facts-text">
-                            <h3 class="facts-dollar" data-toggle="counter-up">100</h3>
+                            <h3 class="facts-dollar" data-toggle="counter-up"><%= fact.raised %></h3>
                             <p>Raised</p>
                         </div>
                     </div>
                 </div>
             </div>
+            <% }); %>
         </div>
-        </div>
-        <!-- Facts End -->
+    </div>
+    <!-- Facts End -->
 
 
         <!-- Team Start -->
-        <div class="team">
-            <div class="container">
-                <div class="section-header text-center">
-                    <p>Meet Our Team</p>
-                    <h2>Awesome people behind our charity activities</h2>
-                </div>
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-item">
-                            <div class="team-img">
-                                <img src="img/director.webp" alt="Team Image">
-                            </div>
-                            <div class="team-text">
-                                <h2>Oria Emmanuel</h2>
-                                <p>Founder & Director</p>
-                                <div class="team-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
+      <div class="team">
+        <div class="container">
+            <div class="section-header text-center">
+                <p>Meet Our Team</p>
+                <h2>Awesome people behind our charity activities</h2>
+            </div>
+            <div class="row">
+              <% if (faqs.length === 0) { %>
+                  <p>No Charity Team Members added at the moment.</p>
+                <% } else { %>
+                  <% faqs.forEach(team => { %>
+                <div class="col-lg-3 col-md-6">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <% if (team.image.contentType) { %>
+                              <!-- Render image data as Base64-encoded string -->
+                              <img  src="data:<%= team.image.contentType %>;base64,<%= team.image.data.toString('base64') %>" alt="">
+                              <% } else { %>
+                              <!-- Render image URL -->
+                              <img  src="<%= team.image %>" alt="">
+                              <% } %>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-item">
-                            <div class="team-img">
-                                <img src="img/ceo.webp" alt="Team Image">
-                            </div>
-                            <div class="team-text">
-                                <h2>Guma Robert</h2>
-                                <p>Founder & CEO</p>
-                                <div class="team-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-item">
-                            <div class="team-img">
-                                <img src="img/project-ofc.webp" alt="Team Image">
-                            </div>
-                            <div class="team-text">
-                                <h2>Etoma Lameck</h2>
-                                <p>Project Officer</p>
-                                <div class="team-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-item">
-                            <div class="team-img">
-                                <img src="img/patron.webp" alt="Team Image">
-                            </div>
-                            <div class="team-text">
-                                <h2>Rev Erima Dan </h2>
-                                <p>Advisor/Patron</p>
-                                <div class="team-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
+                        <div class="team-text">
+                            <h2><%= team.name %></h2>
+                            <p><%= team.position %></p>
+                            <!-- <div class="team-social">
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                            </div> -->
                         </div>
                     </div>
                 </div>
+                <% }); %>
+              <% } %>
             </div>
         </div>
-        <!-- Team End -->
+    </div>
+    <!-- Team End -->
         
         
         <!-- Testimonial Start -->
-        <div class="testimonial">
-            <div class="container">
-                <div class="section-header text-center">
-                    <p>Testimonial</p>
-                    <h2>What people are talking about our charity activities</h2>
-                </div>
-                <div class="owl-carousel testimonials-carousel">
-                    <div class="testimonial-item">
-                        <div class="testimonial-profile">
-                            <img src="img/" alt="Image">
-                            <div class="testimonial-name">
-                                <h3>Person Name</h3>
-                                <p>Profession</p>
-                            </div>
-                        </div>
-                        <div class="testimonial-text">
-                            <p>
-                                Lorem ipsum dolor sit amet elit. Phasel preti mi facilis ornare velit non vulputa. Aliqu metus tortor, auctor id gravid vivera quis
-                            </p>
-                        </div>
-                    </div>
-                    <div class="testimonial-item">
-                        <div class="testimonial-profile">
-                            <img src="img/" alt="Image">
-                            <div class="testimonial-name">
-                                <h3>Person Name</h3>
-                                <p>Profession</p>
-                            </div>
-                        </div>
-                        <div class="testimonial-text">
-                            <p>
-                                Lorem ipsum dolor sit amet elit. Phasel preti mi facilis ornare velit non vulputa. Aliqu metus tortor, auctor id gravid vivera quis
-                            </p>
+      <div class="testimonial">
+        <div class="container">
+            <div class="section-header text-center">
+                <p>Testimonial</p>
+                <h2>What people are talking about our charity activities</h2>
+            </div>
+            <div class="owl-carousel testimonials-carousel">
+                <% if (projects.length === 0) { %>
+                    <p>No Testimonies available at the moment.</p>
+                  <% } else { %>
+                    <% projects.forEach(testimonial => { %>
+                <div class="testimonial-item">
+                    <div class="testimonial-profile">
+                        <% if (testimonial.image.contentType) { %>
+                            <!-- Render image data as Base64-encoded string -->
+                            <img  src="data:<%= testimonial.image.contentType %>;base64,<%= testimonial.image.data.toString('base64') %>" alt="">
+                            <% } else { %>
+                            <!-- Render image URL -->
+                            <img  src="<%= testimonial.image %>" alt="">
+                            <% } %>
+                        <div class="testimonial-name">
+                            <h3><%= testimonial.name %></h3>
+                            <p><%= testimonial.profession %></p>
                         </div>
                     </div>
-                    <div class="testimonial-item">
-                        <div class="testimonial-profile">
-                            <img src="img/" alt="Image">
-                            <div class="testimonial-name">
-                                <h3>Person Name</h3>
-                                <p>Profession</p>
-                            </div>
-                        </div>
-                        <div class="testimonial-text">
-                            <p>
-                                Lorem ipsum dolor sit amet elit. Phasel preti mi facilis ornare velit non vulputa. Aliqu metus tortor, auctor id gravid vivera quis
-                            </p>
-                        </div>
-                    </div>
-                    <div class="testimonial-item">
-                        <div class="testimonial-profile">
-                            <img src="img/" alt="Image">
-                            <div class="testimonial-name">
-                                <h3>Person Name</h3>
-                                <p>Profession</p>
-                            </div>
-                        </div>
-                        <div class="testimonial-text">
-                            <p>
-                                Lorem ipsum dolor sit amet elit. Phasel preti mi facilis ornare velit non vulputa. Aliqu metus tortor, auctor id gravid vivera quis
-                            </p>
-                        </div>
+                    <div class="testimonial-text">
+                        <p>
+                            <%= testimonial.testimony %>
+                        </p>
                     </div>
                 </div>
+                <% }); %>
+                <% } %>
             </div>
         </div>
-        <!-- Testimonial End -->
+      </div>
+      <!-- Testimonial End -->

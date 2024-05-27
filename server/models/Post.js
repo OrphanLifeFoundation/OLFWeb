@@ -1,18 +1,20 @@
 const mongoose = require('mongoose');
 
-const TopicSchema = new mongoose.Schema({
-    name: String,
-  });
-  
-  const Topic = mongoose.model('Topic', TopicSchema);
-
 const Schema = mongoose.Schema;
 const PostSchema = new Schema({ 
-    topic: {
+    title: {
         type: String,
         required: Boolean,
     },
-    title: {
+    target: {
+        type: String,
+        required: Boolean,
+    },
+    raised: {
+        type: String,
+        required: Boolean,
+    },
+    percentage: {
         type: String,
         required: Boolean,
     },
@@ -41,4 +43,4 @@ const PostSchema = new Schema({
 
 const Post = mongoose.model('Post', PostSchema);
 
-module.exports = { Topic, Post };
+module.exports = { Post };

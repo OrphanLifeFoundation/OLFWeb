@@ -2,15 +2,19 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const ServiceSchema = new Schema({
-    title: {
+    districts: {
         type: String,
         required: true, // Fix: Change `Boolean` to `true`
     },
-    body: {
+    volunteers: {
         type: String,
         required: true, // Fix: Change `Boolean` to `true`
     },
-    preview: {
+    goal: {
+        type: String,
+        required: true, // Fix: Change `Boolean` to `true`
+    },
+    raised: {
         type: String,
         required: true, // Fix: Change `Boolean` to `true`
     }

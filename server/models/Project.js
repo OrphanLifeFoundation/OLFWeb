@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const ProjectSchema = new Schema({
-    title: {
+    name: {
         type: String,
         required: Boolean,
     },
-    body: {
+    profession: {
         type: String,
         required: Boolean,
     },
-    preview: {
+    testimony: {
         type: String,
         required: Boolean,
     },
